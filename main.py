@@ -10,27 +10,38 @@ class Snake:
         # draw image onto another
         self.xblock = 100
         self.yblock = 100
+        self.direction = 'down'
     
     def draw(self):
         self.parent_screen.fill((200, 125, 5))
+        # draw one image onto another
         self.parent_screen.blit(self.block, (self.xblock, self.yblock))
          # update the full display surface to the screen
         pygame.display.flip()
     
     def move_left(self):
-        self.xblock = self.xblock - 10
-        self.draw()
+        self.direction == 'left'
 
     def move_right(self):
-        self.xblock = self.xblock + 10
-        self.draw()
+        self.direction == 'right'
 
     def move_up(self):
-        self.yblock = self.yblock - 10
-        self.draw()
+        self.direction == 'up'
 
     def move_down(self):
-        self.yblock = self.yblock + 10
+        self.direction == 'down'
+
+    def walk(self):
+        
+        if self.direction == 'up':
+            self.yblock -= 10
+        if self.direction == 'down':
+            self.yblock += 10
+        if self.direction == 'left':
+            self.xblock -= 10
+        if self.direction == 'right':
+            self.xblock += 10
+            
         self.draw()
 
 class Game:
@@ -48,7 +59,7 @@ class Game:
 
         while running == True: 
             # pygame.event.get() will 
-            # get events from queue
+            # get events from queue and will start game
             for event in pygame.event.get():
                 # if key is clicked
                 if event.type == KEYDOWN:
@@ -67,6 +78,9 @@ class Game:
                 # exit button is clicked on module
                 elif event.type == QUIT:
                     running = False
+
+            self.snake.walk()
+            time.sleep(0.2)
 
 if __name__ == "__main__":
     game = Game()
